@@ -105,6 +105,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# ✅ Health check endpoint
+@app.get("/")
+def health():
+    return {"status": "running"}
+
 
 class CodeRequest(BaseModel):
     code: str
@@ -113,6 +118,12 @@ class CodeRequest(BaseModel):
 class CodeResponse(BaseModel):
     error: List[int]
     result: str
+
+
+# ✅ Optional GET handler (prevents 405 confusion)
+@app.get("/code-interpreter")
+def code_interpreter_info():
+    return {"message": "Use POST method with JSON body containing 'code'."}
 
 
 @app.post("/code-interpreter", response_model=CodeResponse)
