@@ -146,3 +146,4 @@ def code_interpreter(request: CodeRequest):
         "error": error_lines,
         "result": execution_result["output"]
     }
+
